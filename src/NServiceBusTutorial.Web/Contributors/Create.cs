@@ -10,8 +10,7 @@ namespace NServiceBusTutorial.Web.Contributors;
 /// <remarks>
 /// Creates a new Contributor given a name.
 /// </remarks>
-public class Create(IMediator _mediator)
-  : Endpoint<CreateContributorRequest, CreateContributorResponse>
+public class Create(IMediator _mediator) : Endpoint<CreateContributorRequest, CreateContributorResponse>
 {
   public override void Configure()
   {

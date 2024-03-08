@@ -16,7 +16,6 @@ public class CreateContributorHandler(IMessageSession messageSession, IRepositor
   {
     var phoneNumber = new PhoneNumber(string.Empty, request.PhoneNumber, string.Empty);
     var newContributor = new Contributor(request.Name, phoneNumber, ContributorStatus.NotSet);
-
     var createdItem = await _repository.AddAsync(newContributor, cancellationToken);
 
     var message = new ContributorCreatedEvent
@@ -25,7 +24,6 @@ public class CreateContributorHandler(IMessageSession messageSession, IRepositor
       Name = createdItem.Name,
       Status = createdItem.Status.ToString()
     };
-
     await _messageSession.Send(message, cancellationToken: cancellationToken);
 
     return createdItem.Id;
