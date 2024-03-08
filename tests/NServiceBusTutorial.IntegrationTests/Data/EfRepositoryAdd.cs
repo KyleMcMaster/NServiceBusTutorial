@@ -1,4 +1,5 @@
 ﻿using NServiceBusTutorial.Core.ContributorAggregate;
+using NServiceBusTutorial.TestUtilities.Builders;
 using Xunit;
 
 namespace NServiceBusTutorial.IntegrationTests.Data;
@@ -8,12 +9,15 @@ public class EfRepositoryAdd : BaseEfRepoTestFixture
   [Fact]
   public async Task AddsContributorAndSetsId()
   {
-    var testContributorName = "testContributor";
+    string testContributorName = "testContributor";
     var testContributorStatus = ContributorStatus.NotSet;
     var repository = GetRepository();
-    var Contributor = new Contributor(testContributorName);
+    var contributor = new ContributorBuilder()
+      .WithTestValues()
+      .WithName(testContributorName)
+      .Build();
 
-    await repository.AddAsync(Contributor);
+    await repository.AddAsync(contributor);
 
     var newContributor = (await repository.ListAsync())
                     .FirstOrDefault();

@@ -1,4 +1,5 @@
 ﻿using NServiceBusTutorial.Core.ContributorAggregate;
+using NServiceBusTutorial.TestUtilities.Builders;
 using Xunit;
 
 namespace NServiceBusTutorial.IntegrationTests.Data;
@@ -11,7 +12,10 @@ public class EfRepositoryDelete : BaseEfRepoTestFixture
     // add a Contributor
     var repository = GetRepository();
     var initialName = Guid.NewGuid().ToString();
-    var Contributor = new Contributor(initialName);
+    var Contributor = new ContributorBuilder()
+      .WithTestValues()
+      .WithName(initialName)
+      .Build();
     await repository.AddAsync(Contributor);
 
     // delete the item

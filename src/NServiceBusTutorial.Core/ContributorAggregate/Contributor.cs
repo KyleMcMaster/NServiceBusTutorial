@@ -3,17 +3,17 @@ using Ardalis.SharedKernel;
 
 namespace NServiceBusTutorial.Core.ContributorAggregate;
 
-public class Contributor(string name) : EntityBase, IAggregateRoot
+public class Contributor : EntityBase, IAggregateRoot
 {
-  // Example of validating primary constructor inputs
-  // See: https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#initialize-base-class
-  public string Name { get; private set; } = Guard.Against.NullOrEmpty(name, nameof(name));
+  public string Name { get; private set; }
   public ContributorStatus Status { get; private set; } = ContributorStatus.NotSet;
   public PhoneNumber? PhoneNumber { get; private set; }
 
-  public void SetPhoneNumber(string phoneNumber)
+  public Contributor(string name, PhoneNumber phoneNumber, ContributorStatus status)
   {
-    PhoneNumber = new PhoneNumber(string.Empty, phoneNumber, string.Empty);
+    Name = Guard.Against.NullOrEmpty(name, nameof(name));
+    PhoneNumber = phoneNumber;
+    Status = status;
   }
 
   public void UpdateName(string newName)
@@ -36,6 +36,7 @@ public class PhoneNumber : ValueObject
     Number = number;
     Extension = extension;
   }
+
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return CountryCode;

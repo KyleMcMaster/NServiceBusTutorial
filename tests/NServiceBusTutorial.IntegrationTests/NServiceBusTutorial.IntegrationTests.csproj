@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NServiceBusTutorial.Infrastructure\NServiceBusTutorial.Infrastructure.csproj" />
+    <ProjectReference Include="..\NServiceBusTutorial.TestUtilities\NServiceBusTutorial.TestUtilities.csproj" />
     <ProjectReference Include="..\NServiceBusTutorial.UnitTests\NServiceBusTutorial.UnitTests.csproj" />
   </ItemGroup>
 

@@ -6,18 +6,12 @@ namespace NServiceBusTutorial.UnitTests.Core.ContributorAggregate;
 public class ContributorConstructor
 {
   private readonly string _testName = "test name";
-  private Contributor? _testContributor;
-
-  private Contributor CreateContributor()
-  {
-    return new Contributor(_testName);
-  }
 
   [Fact]
   public void InitializesName()
   {
-    _testContributor = CreateContributor();
+    var testContributor = new Contributor(_testName, new(string.Empty, "123-456-7890", string.Empty), ContributorStatus.NotSet);
 
-    Assert.Equal(_testName, _testContributor.Name);
+    Assert.Equal(_testName, testContributor.Name);
   }
 }
