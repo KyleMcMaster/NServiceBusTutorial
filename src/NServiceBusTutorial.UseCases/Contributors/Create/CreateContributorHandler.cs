@@ -6,15 +6,15 @@ using NServiceBusTutorial.Core.ContributorAggregate.Events;
 
 namespace NServiceBusTutorial.UseCases.Contributors.Create;
 
-public class CreateContributorHandler(IMessageSession messageSession, IRepository<Contributor> repository) : ICommandHandler<CreateContributorCommand, Result<int>>
+public class CreateContributorHandler(IMessageSession messageSession, IRepository<Contributor> repository)
+  : ICommandHandler<CreateContributorCommand, Result<int>>
 {
   private readonly IMessageSession _messageSession = messageSession;
   private readonly IRepository<Contributor> _repository = repository;
 
-  public async Task<Result<int>> Handle(CreateContributorCommand request,
-    CancellationToken cancellationToken)
+  public async Task<Result<int>> Handle(CreateContributorCommand request, CancellationToken cancellationToken)
   {
-    var phoneNumber = new PhoneNumber(string.Empty, request.PhoneNumber, string.Empty);
+    var phoneNumber = new PhoneNumber(request.PhoneNumber);
     var newContributor = new Contributor(request.Name, phoneNumber, ContributorStatus.NotSet);
     var createdItem = await _repository.AddAsync(newContributor, cancellationToken);
 
@@ -24,7 +24,7 @@ public class CreateContributorHandler(IMessageSession messageSession, IRepositor
       Name = createdItem.Name,
       Status = createdItem.Status.ToString()
     };
-    await _messageSession.Send(message, cancellationToken: cancellationToken);
+    await _messageSession.Send(message, cancellationToken);
 
     return createdItem.Id;
   }

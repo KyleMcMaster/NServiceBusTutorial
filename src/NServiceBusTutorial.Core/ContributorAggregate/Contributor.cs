@@ -37,6 +37,13 @@ public class PhoneNumber : ValueObject
     Extension = extension;
   }
 
+  public PhoneNumber(string number)
+  {
+    CountryCode = string.Empty;
+    Number = number;
+    Extension = string.Empty;
+  }
+
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return CountryCode;
