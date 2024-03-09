@@ -14,7 +14,7 @@ public class CreateContributorHandler(IMessageSession messageSession, IRepositor
 
   public async Task<Result<int>> Handle(CreateContributorCommand request, CancellationToken cancellationToken)
   {
-    var phoneNumber = new PhoneNumber(request.PhoneNumber);
+    var phoneNumber = new PhoneNumber(string.Empty, request.PhoneNumber, string.Empty);
     var newContributor = new Contributor(request.Name, phoneNumber, ContributorStatus.NotSet);
     var createdItem = await _repository.AddAsync(newContributor, cancellationToken);
 

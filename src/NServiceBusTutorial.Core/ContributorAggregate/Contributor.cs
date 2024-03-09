@@ -5,7 +5,7 @@ namespace NServiceBusTutorial.Core.ContributorAggregate;
 
 public class Contributor : EntityBase, IAggregateRoot
 {
-  public string Name { get; private set; }
+  public string Name { get; private set; } = string.Empty;
   public ContributorStatus Status { get; private set; } = ContributorStatus.NotSet;
   public PhoneNumber? PhoneNumber { get; private set; }
 
@@ -15,6 +15,8 @@ public class Contributor : EntityBase, IAggregateRoot
     PhoneNumber = phoneNumber;
     Status = status;
   }
+
+  private Contributor() { } // required for EF
 
   public void UpdateName(string newName)
   {
@@ -28,7 +30,8 @@ public class PhoneNumber : ValueObject
   public string Number { get; private set; } = string.Empty;
   public string? Extension { get; private set; } = string.Empty;
 
-  public PhoneNumber(string countryCode,
+  public PhoneNumber(
+    string countryCode,
     string number,
     string? extension)
   {
@@ -37,17 +40,10 @@ public class PhoneNumber : ValueObject
     Extension = extension;
   }
 
-  public PhoneNumber(string number)
-  {
-    CountryCode = string.Empty;
-    Number = number;
-    Extension = string.Empty;
-  }
-
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return CountryCode;
     yield return Number;
-    yield return Extension ?? String.Empty;
+    yield return Extension ?? string.Empty;
   }
 }

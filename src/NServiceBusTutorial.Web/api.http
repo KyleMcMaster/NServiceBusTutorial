@@ -1,5 +1,5 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
-@host=https://localhost
+@host=http://localhost
 @port=57679
 
 // List all contributors
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 {
   "id": {{id_to_update}},
-  "name": "ardalis2"
+  "name": "ardalis3"
 }
 
 ###

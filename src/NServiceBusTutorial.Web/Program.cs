@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
 using Ardalis.ListStartupServices;
 using Ardalis.SharedKernel;
+using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate;
+using NServiceBusTutorial.Core.ContributorAggregate.Events;
 using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure;
 using NServiceBusTutorial.Infrastructure.Data;
@@ -43,9 +45,25 @@ ConfigureMediatR();
 
 builder.Services.AddInfrastructureServices(builder.Configuration, microsoftLogger);
 
-
 builder.Services.AddScoped<IEmailSender, FakeEmailSender>();
 AddShowAllServicesSupport();
+
+builder.Host.UseNServiceBus(_ =>
+{
+  var endpointConfiguration = new EndpointConfiguration("contributors-api");
+  
+  var transport = endpointConfiguration.UseTransport<LearningTransport>();
+
+  transport.Routing().RouteToEndpoint(
+    typeof(ContributorCreatedEvent),
+    "contributors-worker");
+  transport.Transactions(TransportTransactionMode.ReceiveOnly);
+
+  endpointConfiguration.SendOnly();
+  endpointConfiguration.EnableInstallers();
+
+  return endpointConfiguration;
+});
 
 var app = builder.Build();
 
