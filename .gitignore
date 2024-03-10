@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # NServiceBus Learning Transport message bodies
 .learningtransport
+
+# Local Development Settomgs 
+**/appsettings.Development.json
