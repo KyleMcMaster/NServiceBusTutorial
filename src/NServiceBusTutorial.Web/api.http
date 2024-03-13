@@ -1,5 +1,5 @@
 # For more info on HTTP files go to https://aka.ms/vs/httpfile
-@host=http://localhost
+@host=https://localhost
 @port=57679
 
 // List all contributors
