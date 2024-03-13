@@ -405,3 +405,6 @@ FodyWeavers.xsd
 
 # Sqlite database files
 *.sqlite*
+
+# Local log messages 
+*log*.txt
