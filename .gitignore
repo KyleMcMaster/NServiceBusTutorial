@@ -402,3 +402,6 @@ FodyWeavers.xsd
 
 # Local Development Settomgs 
 **/appsettings.Development.json
+
+# Sqlite database files
+*.sqlite*
