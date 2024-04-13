@@ -1,5 +1,5 @@
 # NServiceBusTutorial
- 
+
 Sample code for the [NimblePros](https://nimblepros.com/) series on NServiceBus with .NET 8
 
 ## Background Information
