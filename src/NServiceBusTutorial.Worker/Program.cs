@@ -21,11 +21,8 @@ builder.ConfigureServices((hostContext, services) =>
   services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
   services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 
-  var mediatRAssemblies = new[]
-  {
-    typeof(ContributorCreateCommandHandler).Assembly
-  };
-  services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies!));
+  var mediatRAssemblies =
+  services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies([typeof(ContributorCreateCommandHandler).Assembly]));
   services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
 });
 
