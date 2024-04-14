@@ -34,8 +34,8 @@ public class Create(IMediator _mediator) : Endpoint<CreateContributorRequest, Cr
 
     if (result.IsSuccess)
     {
-      Response = new CreateContributorResponse(result.Value, request.Name!);
-      return;
+      var response = new CreateContributorResponse(id: 0, name: request.Name); // TODO: remove Id from response
+      await SendAsync(response, statusCode: 202, cancellationToken);
     }
     // TODO: Handle other cases as necessary
   }

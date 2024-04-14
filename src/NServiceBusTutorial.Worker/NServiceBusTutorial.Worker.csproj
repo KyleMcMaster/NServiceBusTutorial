@@ -11,5 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NServiceBusTutorial.Core\NServiceBusTutorial.Core.csproj" />
+    <ProjectReference Include="..\NServiceBusTutorial.Infrastructure\NServiceBusTutorial.Infrastructure.csproj" />
   </ItemGroup>
 </Project>
