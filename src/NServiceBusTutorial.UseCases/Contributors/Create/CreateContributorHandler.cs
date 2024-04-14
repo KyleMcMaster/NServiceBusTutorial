@@ -14,17 +14,16 @@ public class CreateContributorHandler(IMessageSession messageSession, IRepositor
 
   public async Task<Result<int>> Handle(CreateContributorCommand request, CancellationToken cancellationToken)
   {
-    var phoneNumber = new PhoneNumber(string.Empty, request.PhoneNumber, string.Empty);
-    var newContributor = new Contributor(request.Name, phoneNumber, ContributorStatus.NotSet);
-    var createdItem = await _repository.AddAsync(newContributor, cancellationToken);
 
-    var message = new ContributorCreatedEvent
+
+    var message = new Core.ContributorAggregate.Commands.CreateContributorCommand
     {
-      ContributorId = createdItem.Id,
       Name = createdItem.Name,
       Status = createdItem.Status.ToString()
     };
-    await _messageSession.Send(message, cancellationToken);
+    // When referencing "Getting started with NServiceBus" use:
+    // await _messageSession.Send(message, cancellationToken);
+    await _messageSession.Publish(message, cancellationToken);
 
     return createdItem.Id;
   }
