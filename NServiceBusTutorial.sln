@@ -16,7 +16,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{250F283E-FE2F-4BBD-9E63-A2265B84E23F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		CleanArchitecture.nuspec = CleanArchitecture.nuspec
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
@@ -37,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBusTutorial.UseCase
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBusTutorial.TestUtilities", "tests\NServiceBusTutorial.TestUtilities\NServiceBusTutorial.TestUtilities.csproj", "{7A8F52CA-113E-4461-8D91-80A1683DDC26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NServiceBusTutorial.Worker", "src\NServiceBusTutorial.Worker\NServiceBusTutorial.Worker.csproj", "{558A7852-42FB-4867-B9AB-0D58F69CD7F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NServiceBusTutorial.Worker", "src\NServiceBusTutorial.Worker\NServiceBusTutorial.Worker.csproj", "{558A7852-42FB-4867-B9AB-0D58F69CD7F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\NServiceBusTutorial.Core\NServiceBusTutorial.Core.csproj" />
     <ProjectReference Include="..\..\src\NServiceBusTutorial.UseCases\NServiceBusTutorial.UseCases.csproj" />
+    <ProjectReference Include="..\..\src\NServiceBusTutorial.Worker\NServiceBusTutorial.Worker.csproj" />
   </ItemGroup>
 
 </Project>
