@@ -1,5 +1,6 @@
 ﻿using Ardalis.SharedKernel;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using NServiceBus.Testing;
 using NServiceBusTutorial.Core.ContributorAggregate;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
@@ -26,6 +27,10 @@ public class Handle
 
     await handler.Handle(message, context);
 
-    context.PublishedMessages.Single().Message.Should().BeOfType<ContributorCreatedEvent>();
+    using var assertionScope = new AssertionScope();
+    var publishedMessage = context.PublishedMessages.Single();
+    publishedMessage.Should().BeOfType<ContributorCreatedEvent>();
+    publishedMessage.As<ContributorCreatedEvent>().Name.Should().Be(message.Name);
+    publishedMessage.As<ContributorCreatedEvent>().Status.Should().Be(ContributorStatus.NotSet.Name);
   }
 }
