@@ -4,7 +4,7 @@ Sample code for the NimblePros series on NServiceBus with .NET 8
 
 ## Background Information
 
-This project serves to explain in code the concepts of NServiceBus. The project is broken down into multiple parts, each part focusing on a different aspect of NServiceBus. This code is meant to be a companion to the blog series on NServiceBus by NimblePros. I will try to tag the codebase when each article is published so that you can follow along with the blog series but for the most part the code should be backward compatible as the series progresses. Any configuration or manual build steps will be documented in this README file to make it easier to follow along.
+This project serves to explain in code the concepts of NServiceBus. The project is broken down into multiple parts, each part focusing on a different aspect of NServiceBus. This code is meant to be a companion to the blog series on NServiceBus by NimblePros. I will try to tag the codebase when each article is published so that you can follow along with the blog series but for the most part, the code should be backward compatible as the series progresses. Any configuration or manual build steps will be documented in this README file to make it easier to follow along.
 
 ## Projects 
 
