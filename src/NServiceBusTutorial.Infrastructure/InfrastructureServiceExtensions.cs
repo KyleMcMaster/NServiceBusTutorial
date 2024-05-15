@@ -16,10 +16,10 @@ public static class InfrastructureServiceExtensions
 {
   public static IServiceCollection AddInfrastructureServices(
     this IServiceCollection services,
-    ConfigurationManager config,
+    IConfiguration configuration,
     ILogger logger)
   {
-    string? connectionString = config.GetConnectionString("SqliteConnection");
+    string? connectionString = configuration.GetConnectionString("SqliteConnection");
     Guard.Against.Null(connectionString);
     services.AddDbContext<AppDbContext>(options =>
      options.UseSqlite(connectionString));

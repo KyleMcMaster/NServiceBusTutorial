@@ -3,7 +3,6 @@ using Ardalis.ListStartupServices;
 using Ardalis.SharedKernel;
 using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate;
-using NServiceBusTutorial.Core.ContributorAggregate.Events;
 using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure;
 using NServiceBusTutorial.Infrastructure.Data;
@@ -14,6 +13,7 @@ using FastEndpoints.Swagger;
 using MediatR;
 using Serilog;
 using Serilog.Extensions.Logging;
+using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 
 var logger = Log.Logger = new LoggerConfiguration()
   .Enrich.FromLogContext()
@@ -55,7 +55,7 @@ builder.Host.UseNServiceBus(_ =>
   var transport = endpointConfiguration.UseTransport<LearningTransport>();
 
   transport.Routing().RouteToEndpoint(
-    typeof(ContributorCreatedEvent),
+    typeof(ContributorCreateCommand),
     "contributors-worker");
   transport.Transactions(TransportTransactionMode.ReceiveOnly);
 

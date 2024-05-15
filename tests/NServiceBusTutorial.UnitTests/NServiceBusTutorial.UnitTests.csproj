@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Core\Services\ToDoItemSearchService_GetAllIncompleteItems.cs" />
-    <Compile Remove="Core\Services\ToDoItemSearchService_GetNextIncompleteItem.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NServiceBus.Testing" />
@@ -34,12 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\NServiceBusTutorial.Core\NServiceBusTutorial.Core.csproj" />
     <ProjectReference Include="..\..\src\NServiceBusTutorial.UseCases\NServiceBusTutorial.UseCases.csproj" />
+    <ProjectReference Include="..\..\src\NServiceBusTutorial.Worker\NServiceBusTutorial.Worker.csproj" />
   </ItemGroup>
 
 </Project>

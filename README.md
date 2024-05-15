@@ -1,6 +1,6 @@
 # NServiceBusTutorial
 
-Sample code for the NimblePros series on NServiceBus with .NET 8
+Sample code for the [NimblePros](https://nimblepros.com/) series on NServiceBus with .NET 8
 
 ## Background Information
 
@@ -34,8 +34,12 @@ Currently, this project uses `LearningTransport` which automatically configures 
 
 ## Resources
 
-[What is NServiceBus?](https://blog.nimblepros.com/blogs/what-is-nservicebus/)
+NimblePros blog posts on NServiceBus
 
-[Getting Started with NServiceBus?](https://blog.nimblepros.com/blogs/getting-started-with-nservicebus/)
+1: [What is NServiceBus?](https://blog.nimblepros.com/blogs/what-is-nservicebus/)
 
-[Commands, Events, and Messages Explained](https://blog.nimblepros.com/blogs/commands-events-messages-explained)
+2: [Getting Started with NServiceBus?](https://blog.nimblepros.com/blogs/getting-started-with-nservicebus/)
+
+3: [Commands, Events, and Messages Explained](https://blog.nimblepros.com/blogs/commands-events-messages-explained)
+
+4: [Testing NServiceBus Message Handlers](https://blog.nimblepros.com/blogs/testing-nservicebus-message-handlers/)

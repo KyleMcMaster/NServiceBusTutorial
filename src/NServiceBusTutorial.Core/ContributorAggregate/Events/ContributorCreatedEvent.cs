@@ -1,6 +1,8 @@
 ﻿namespace NServiceBusTutorial.Core.ContributorAggregate.Events;
 
-public class ContributorCreatedEvent : IMessage
+public class ContributorCreatedEvent 
+  // When referencing "Getting started with NServiceBus" use: : IMessage
+  : IEvent
 {
   public int ContributorId { get; init; }
   public string Name { get; init; } = string.Empty;
