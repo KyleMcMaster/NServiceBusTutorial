@@ -2,5 +2,5 @@
 
 public class StartContributorVerificationCommand : ICommand
 {
-  public Guid ContributorId { get; init; }
+  public int ContributorId { get; init; }
 }
