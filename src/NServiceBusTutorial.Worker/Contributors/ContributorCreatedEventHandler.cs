@@ -2,7 +2,7 @@
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
 
-namespace NServiceBusTutorial.Worker;
+namespace NServiceBusTutorial.Worker.Contributors;
 
 public class ContributorCreatedEventHandler(ILogger<ContributorCreatedEventHandler> logger) 
   : IHandleMessages<ContributorCreatedEvent>

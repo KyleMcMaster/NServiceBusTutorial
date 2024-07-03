@@ -4,7 +4,7 @@ using NServiceBusTutorial.Core.ContributorAggregate;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
 
-namespace NServiceBusTutorial.Worker;
+namespace NServiceBusTutorial.Worker.Contributors;
 
 public class ContributorCreateCommandHandler(IRepository<Contributor> _repository) 
   : IHandleMessages<ContributorCreateCommand>

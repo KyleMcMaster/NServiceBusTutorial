@@ -1,11 +1,9 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NServiceBus;
 using NServiceBusTutorial.Infrastructure.Data;
-using NServiceBusTutorial.Worker;
-using System.Reflection;
+using NServiceBusTutorial.Worker.Contributors;
 
 var builder = Host.CreateDefaultBuilder();
 

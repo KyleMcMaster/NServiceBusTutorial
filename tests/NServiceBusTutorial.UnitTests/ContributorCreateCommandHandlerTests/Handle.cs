@@ -5,7 +5,7 @@ using NServiceBus.Testing;
 using NServiceBusTutorial.Core.ContributorAggregate;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
-using NServiceBusTutorial.Worker;
+using NServiceBusTutorial.Worker.Contributors;
 using NSubstitute;
 using Xunit;
 
