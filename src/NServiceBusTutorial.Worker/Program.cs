@@ -37,6 +37,10 @@ builder.UseNServiceBus(context =>
     typeof(StartContributorVerificationCommand),
     "contributors-saga");
 
+  var recoverability = endpointConfiguration.Recoverability();
+  recoverability.Immediate(c => c.NumberOfRetries(0));
+  recoverability.Delayed(c => c.NumberOfRetries(0));
+
   return endpointConfiguration;
 });
 
