@@ -57,6 +57,7 @@ builder.Host.UseNServiceBus(_ =>
   transport.Routing().RouteToEndpoint(
     typeof(ContributorCreateCommand),
     "contributors-worker");
+
   transport.Transactions(TransportTransactionMode.ReceiveOnly);
 
   endpointConfiguration.SendOnly();

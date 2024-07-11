@@ -1,11 +1,18 @@
 ﻿using NServiceBus;
+using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 
 var builder = Host.CreateDefaultBuilder(args);
 
 builder.UseNServiceBus(context => 
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-saga");
-  endpointConfiguration.UseTransport<LearningTransport>();
+  var transport = endpointConfiguration.UseTransport<LearningTransport>();
+
+  transport.Routing().RouteToEndpoint(
+    typeof(VerifyContributorCommand),
+    "contributors-worker");
+
+  var persistence = endpointConfiguration.UsePersistence<LearningPersistence>();
 
   return endpointConfiguration;
 });

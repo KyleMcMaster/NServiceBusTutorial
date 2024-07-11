@@ -17,6 +17,15 @@ public class ContributorVerificationSaga : Saga<ContributorVerificationSagaData>
 
   public async Task Handle(StartContributorVerificationCommand message, IMessageHandlerContext context)
   {
+    if (message.ContributorStatus == SomethingX)
+    {
+      // send x event to start workflow x
+    }
+    else
+    {
+      // send y event to start workflow y
+    }
+
     var verifyContributorCommand = new VerifyContributorCommand { ContributorId = message.ContributorId };
     await context.Send(verifyContributorCommand);
     var timeout = new ContributorVerificationSagaTimeout { ContributorId = message.ContributorId };
