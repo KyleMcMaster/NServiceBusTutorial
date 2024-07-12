@@ -12,6 +12,10 @@ builder.UseNServiceBus(context =>
     typeof(VerifyContributorCommand),
     "contributors-worker");
 
+  transport.Routing().RouteToEndpoint(
+    typeof(UnverifyContributorCommand),
+    "contributors-worker");
+
   var persistence = endpointConfiguration.UsePersistence<LearningPersistence>();
 
   return endpointConfiguration;

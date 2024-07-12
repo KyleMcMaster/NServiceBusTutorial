@@ -8,12 +8,14 @@ public class Contributor : EntityBase, IAggregateRoot
   public string Name { get; private set; } = string.Empty;
   public ContributorStatus Status { get; private set; } = ContributorStatus.NotSet;
   public PhoneNumber? PhoneNumber { get; private set; }
+  public VerificationStatus Verification { get; private set; } = VerificationStatus.Pending;
 
-  public Contributor(string name, PhoneNumber phoneNumber, ContributorStatus status)
+  public Contributor(string name, PhoneNumber phoneNumber, ContributorStatus status, VerificationStatus verificationStatus)
   {
     Name = Guard.Against.NullOrEmpty(name, nameof(name));
     PhoneNumber = phoneNumber;
     Status = status;
+    Verification = verificationStatus;
   }
 
   private Contributor() { } // required for EF
@@ -21,6 +23,16 @@ public class Contributor : EntityBase, IAggregateRoot
   public void UpdateName(string newName)
   {
     Name = Guard.Against.NullOrEmpty(newName, nameof(newName));
+  }
+
+  public void Verify()
+  {
+   Verification = VerificationStatus.Verified;
+  }
+
+  public void Unverify()
+  {
+    Verification = VerificationStatus.Unverified;
   }
 }
 
