@@ -6,6 +6,7 @@ var builder = Host.CreateDefaultBuilder(args);
 builder.UseNServiceBus(context => 
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-saga");
+  endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   var transport = endpointConfiguration.UseTransport<LearningTransport>();
 
   transport.Routing().RouteToEndpoint(

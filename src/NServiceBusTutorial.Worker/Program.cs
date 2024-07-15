@@ -32,6 +32,7 @@ builder.ConfigureServices((hostContext, services) =>
 builder.UseNServiceBus(context => 
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-worker");
+  endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   var transport = endpointConfiguration.UseTransport<LearningTransport>();
   transport.Routing().RouteToEndpoint(
     typeof(StartContributorVerificationCommand),
