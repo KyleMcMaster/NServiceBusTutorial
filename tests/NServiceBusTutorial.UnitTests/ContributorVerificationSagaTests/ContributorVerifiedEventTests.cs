@@ -14,12 +14,12 @@ public class ContributorVerifiedEventTests
   public async void ShouldMarkSagaAsCompleted()
   {
     var message = new ContributorVerifiedEvent();
-    var saga = new ContributorVerificationSaga();
+    var saga = new TestableSaga<ContributorVerificationSaga, ContributorVerificationSagaData>();
     var context = new TestableMessageHandlerContext();
 
-    await saga.Handle(message, context);
+    var result = await saga.Handle(message, context);
 
-    saga.Completed.Should().BeTrue();
+    result.Completed.Should().BeTrue();
   }
 
   [Fact]
@@ -34,19 +34,17 @@ public class ContributorVerifiedEventTests
     {
       ContributorId = expectedContributorId
     };
-    var saga = new ContributorVerificationSaga()
-    {
-      Data = new()
-    };
+    var saga = new TestableSaga<ContributorVerificationSaga, ContributorVerificationSagaData>();
     var context = new TestableMessageHandlerContext();
 
-    await saga.Handle(startMessage, context);
-    await saga.Handle(message, context);
-
+    var result = await saga.Handle(startMessage, context);
     using var assertionScope = new AssertionScope();
-    saga.Data.Should().NotBeNull();
-    saga.Data.VerificationStatus.Should().Be(VerificationStatus.Pending);
-    saga.Completed.Should().BeTrue();
-    context.TimeoutMessages.Should().ContainSingle();
+    result.SagaDataSnapshot.ContributorId.Should().Be(expectedContributorId);
+    result.SagaDataSnapshot.VerificationStatus.Should().Be(VerificationStatus.Pending);
+
+    result = await saga.Handle(message, context);
+    result.Completed.Should().BeTrue();
+    var timeoutMessage = result.FindTimeoutMessage<ContributorVerificationSagaTimeout>();
+    timeoutMessage.Should().NotBeNull();
   }
 }

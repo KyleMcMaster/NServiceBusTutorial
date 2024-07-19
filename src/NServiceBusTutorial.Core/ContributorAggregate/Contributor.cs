@@ -27,7 +27,7 @@ public class Contributor : EntityBase, IAggregateRoot
 
   public void Verify()
   {
-   Verification = VerificationStatus.Verified;
+    Verification = VerificationStatus.Verified;
   }
 
   public void Unverify()
