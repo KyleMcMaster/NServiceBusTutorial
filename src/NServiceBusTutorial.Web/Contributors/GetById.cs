@@ -35,7 +35,7 @@ public class GetById(IMediator _mediator)
 
     if (result.IsSuccess)
     {
-      Response = new ContributorRecord(result.Value.Id, result.Value.Name, result.Value.PhoneNumber);
+      Response = new ContributorRecord(result.Value.Id, result.Value.Name, result.Value.PhoneNumber, result.Value.Verification);
     }
   }
 }

@@ -5,6 +5,34 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Saga: Run & Attach (Debug)",
+            "type": "coreclr",
+            "preLaunchTask": "dotnet: build (Debug)",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/NServiceBusTutorial.Saga/bin/Debug/net8.0/NServiceBusTutorial.Saga.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/NServiceBusTutorial.Saga/bin/Debug/net8.0",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "DOTNET_ENVIRONMENT": "Development"
+            },
+            "launchBrowser": {
+                "enabled": false,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                },
+                "osx": {
+                    "command": "open"
+                },
+                "linux": {
+                    "command": "xdg-open"
+                },
+            }
+        },
+        {
             "name": "Web: Run & Attach (Debug)",
             "type": "coreclr",
             "preLaunchTask": "dotnet: build (Debug)",
@@ -66,6 +94,7 @@
         {
             "name": "Full Workflow",
             "configurations": [
+                "Saga: Run & Attach (Debug)",
                 "Web: Run & Attach (Debug)",
                 "Worker: Run & Attach (Debug)",
             ],

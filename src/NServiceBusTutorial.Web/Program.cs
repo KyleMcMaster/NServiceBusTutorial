@@ -14,6 +14,7 @@ using MediatR;
 using Serilog;
 using Serilog.Extensions.Logging;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
+using NServiceBusTutorial.Core.ContributorAggregate.Events;
 
 var logger = Log.Logger = new LoggerConfiguration()
   .Enrich.FromLogContext()
@@ -51,12 +52,18 @@ AddShowAllServicesSupport();
 builder.Host.UseNServiceBus(_ =>
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-api");
-  
+  endpointConfiguration.UseSerialization<SystemJsonSerializer>();
+
   var transport = endpointConfiguration.UseTransport<LearningTransport>();
 
   transport.Routing().RouteToEndpoint(
     typeof(ContributorCreateCommand),
     "contributors-worker");
+
+  transport.Routing().RouteToEndpoint(
+    typeof(ContributorVerifiedEvent),
+    "contributors-saga");
+
   transport.Transactions(TransportTransactionMode.ReceiveOnly);
 
   endpointConfiguration.SendOnly();

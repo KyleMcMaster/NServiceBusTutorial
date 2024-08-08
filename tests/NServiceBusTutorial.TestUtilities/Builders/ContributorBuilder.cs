@@ -23,6 +23,6 @@ public class ContributorBuilder
 
   public Contributor Build()
   {
-    return new Contributor(_name!, new PhoneNumber(string.Empty, "123-456-7890", string.Empty), _status!);
+    return new Contributor(_name!, new PhoneNumber(string.Empty, "123-456-7890", string.Empty), _status!, VerificationStatus.Pending);
   }
 }

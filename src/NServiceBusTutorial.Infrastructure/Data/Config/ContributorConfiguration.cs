@@ -18,5 +18,10 @@ public class ContributorConfiguration : IEntityTypeConfiguration<Contributor>
       .HasConversion(
           x => x.Value,
           x => ContributorStatus.FromValue(x));
+
+    builder.Property(x => x.Verification)
+      .HasConversion(
+          x => x.Value,
+          x => VerificationStatus.FromValue(x));
   }
 }

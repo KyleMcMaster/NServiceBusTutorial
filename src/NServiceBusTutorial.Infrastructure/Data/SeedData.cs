@@ -6,8 +6,8 @@ namespace NServiceBusTutorial.Infrastructure.Data;
 
 public static class SeedData
 {
-  public static readonly Contributor Contributor1 = new("Ardalis", new(string.Empty, "123-456-7890", string.Empty), ContributorStatus.CoreTeam);
-  public static readonly Contributor Contributor2 = new("Snowfrog", new(string.Empty, "098-765-4321", string.Empty), ContributorStatus.Community);
+  public static readonly Contributor Contributor1 = new("Ardalis", new(string.Empty, "123-456-7890", string.Empty), ContributorStatus.CoreTeam, VerificationStatus.Pending);
+  public static readonly Contributor Contributor2 = new("Snowfrog", new(string.Empty, "098-765-4321", string.Empty), ContributorStatus.Community, VerificationStatus.Pending);
 
   public static void Initialize(IServiceProvider serviceProvider)
   {

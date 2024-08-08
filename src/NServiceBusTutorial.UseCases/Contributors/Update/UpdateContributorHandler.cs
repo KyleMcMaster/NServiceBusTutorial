@@ -20,6 +20,6 @@ public class UpdateContributorHandler(IRepository<Contributor> _repository)
     await _repository.UpdateAsync(existingContributor, cancellationToken);
 
     return Result.Success(new ContributorDTO(existingContributor.Id,
-      existingContributor.Name, existingContributor.PhoneNumber?.Number ?? ""));
+      existingContributor.Name, existingContributor.PhoneNumber?.Number ?? "", ""));
   }
 }
