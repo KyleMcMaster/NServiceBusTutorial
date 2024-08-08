@@ -408,3 +408,6 @@ FodyWeavers.xsd
 
 # Local log messages 
 *log*.txt
+
+# Mac specific files
+.DS_Store
