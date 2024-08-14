@@ -14,10 +14,10 @@ builder.UseConsoleLifetime();
 
 builder.ConfigureServices((hostContext, services) =>
 {
-  string? connectionString = hostContext.Configuration.GetConnectionString("SqliteConnection");
+  string? connectionString = hostContext.Configuration.GetConnectionString("DefaultConnection");
   Guard.Against.Null(connectionString);
   services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseNpgsql(connectionString));
 
   services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
   services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
@@ -33,7 +33,7 @@ builder.UseNServiceBus(context =>
   var endpointConfiguration = new EndpointConfiguration("contributors-worker");
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   endpointConfiguration.EnableInstallers();
-  
+
   var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
   transport.ConnectionString("host=localhost");
   transport.UseDirectRoutingTopology(QueueType.Quorum);
@@ -41,6 +41,10 @@ builder.UseNServiceBus(context =>
   transport.Routing().RouteToEndpoint(
     typeof(StartContributorVerificationCommand),
     "contributors-saga");
+
+  var recoverability = endpointConfiguration.Recoverability();
+  recoverability.Immediate(c => c.NumberOfRetries(0));
+  recoverability.Delayed(c => c.NumberOfRetries(0));
 
   return endpointConfiguration;
 });
