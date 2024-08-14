@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.Xml;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 using NServiceBus;
@@ -33,7 +32,12 @@ builder.UseNServiceBus(context =>
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-worker");
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
-  var transport = endpointConfiguration.UseTransport<LearningTransport>();
+  endpointConfiguration.EnableInstallers();
+  
+  var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
+  transport.ConnectionString("host=localhost");
+  transport.UseDirectRoutingTopology(QueueType.Quorum);
+
   transport.Routing().RouteToEndpoint(
     typeof(StartContributorVerificationCommand),
     "contributors-saga");

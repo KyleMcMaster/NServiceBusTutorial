@@ -30,7 +30,7 @@ Coming soon!
 
 ### Transports
 
-Currently, this project uses `LearningTransport` which automatically configures a file-based queue at the root of the repository when the applications start. This is useful for development and testing but should not be used in production.
+docker run -d --hostname my-rabbit --name some-rabbit -p 8080:15672 -p 5672:5672 rabbitmq:3-management
 
 ## Resources
 

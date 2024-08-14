@@ -49,12 +49,15 @@ builder.Services.AddInfrastructureServices(builder.Configuration, microsoftLogge
 builder.Services.AddScoped<IEmailSender, FakeEmailSender>();
 AddShowAllServicesSupport();
 
-builder.Host.UseNServiceBus(_ =>
+builder.Host.UseNServiceBus(context =>
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-api");
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
+  endpointConfiguration.EnableInstallers();
 
-  var transport = endpointConfiguration.UseTransport<LearningTransport>();
+  var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
+  transport.ConnectionString("host=localhost");
+  transport.UseDirectRoutingTopology(QueueType.Quorum);
 
   transport.Routing().RouteToEndpoint(
     typeof(ContributorCreateCommand),
