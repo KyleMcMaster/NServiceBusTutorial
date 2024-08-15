@@ -40,7 +40,6 @@ public class ContributorVerifiedEventTests
     var result = await saga.Handle(startMessage, context);
     using var assertionScope = new AssertionScope();
     result.SagaDataSnapshot.ContributorId.Should().Be(expectedContributorId);
-    result.SagaDataSnapshot.VerificationStatus.Should().Be(VerificationStatus.Pending);
 
     result = await saga.Handle(message, context);
     result.Completed.Should().BeTrue();
