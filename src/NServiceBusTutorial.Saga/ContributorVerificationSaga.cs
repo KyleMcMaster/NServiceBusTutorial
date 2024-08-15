@@ -21,7 +21,6 @@ public class ContributorVerificationSaga : Saga<ContributorVerificationSagaData>
   {
     // Pending
     var verifyContributorCommand = new VerifyContributorCommand { ContributorId = message.ContributorId };
-    Data.VerificationStatus = VerificationStatus.Pending;
     await context.Send(verifyContributorCommand);
     var timeout = new ContributorVerificationSagaTimeout { ContributorId = message.ContributorId };
     await RequestTimeout(context, DateTime.UtcNow.AddSeconds(10), timeout);
@@ -45,7 +44,6 @@ public class ContributorVerificationSaga : Saga<ContributorVerificationSagaData>
 public class ContributorVerificationSagaData : ContainSagaData
 {
   public int ContributorId { get; set; }
-  public VerificationStatus VerificationStatus { get; set; } = VerificationStatus.Pending;
 }
 
 public class ContributorVerificationSagaTimeout
