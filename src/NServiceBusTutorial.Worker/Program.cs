@@ -33,6 +33,7 @@ builder.UseNServiceBus(context =>
   var endpointConfiguration = new EndpointConfiguration("contributors-worker");
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   endpointConfiguration.EnableInstallers();
+  endpointConfiguration.SendFailedMessagesTo("error");
 
   var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
   transport.ConnectionString("host=localhost");
@@ -43,8 +44,8 @@ builder.UseNServiceBus(context =>
     "contributors-saga");
 
   var recoverability = endpointConfiguration.Recoverability();
-  recoverability.Immediate(c => c.NumberOfRetries(0));
-  recoverability.Delayed(c => c.NumberOfRetries(0));
+  recoverability.Immediate(c => c.NumberOfRetries(1));
+  recoverability.Delayed(c => c.NumberOfRetries(1));
 
   return endpointConfiguration;
 });
