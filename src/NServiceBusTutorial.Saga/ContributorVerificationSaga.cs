@@ -19,24 +19,21 @@ public class ContributorVerificationSaga : Saga<ContributorVerificationSagaData>
 
   public async Task Handle(StartContributorVerificationCommand message, IMessageHandlerContext context)
   {
-    // Pending
     var verifyContributorCommand = new VerifyContributorCommand { ContributorId = message.ContributorId };
     await context.Send(verifyContributorCommand);
     var timeout = new ContributorVerificationSagaTimeout { ContributorId = message.ContributorId };
-    await RequestTimeout(context, DateTime.UtcNow.AddSeconds(10), timeout);
+    await RequestTimeout(context, DateTime.UtcNow.AddHours(1), timeout);
   }
 
   public Task Handle(ContributorVerifiedEvent message, IMessageHandlerContext context)
   {
-    // Verified
     MarkAsComplete();
     return Task.CompletedTask;
   }
 
   public async Task Timeout(ContributorVerificationSagaTimeout state, IMessageHandlerContext context)
   {
-    // Unverified
-    await context.Send(new UnverifyContributorCommand { ContributorId = state.ContributorId });
+    await context.Send(new NotVerifyContributorCommand { ContributorId = state.ContributorId });
     MarkAsComplete();
   }
 }
