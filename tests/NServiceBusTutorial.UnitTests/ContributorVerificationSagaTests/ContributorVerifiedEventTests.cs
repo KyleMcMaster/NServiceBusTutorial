@@ -11,7 +11,7 @@ namespace NServiceBusTutorial.UnitTests.ContributorVerificationSagaTests;
 public class ContributorVerifiedEventTests
 {
   [Fact]
-  public async void ShouldMarkSagaAsCompleted()
+  public async Task ShouldMarkSagaAsCompleted()
   {
     var message = new ContributorVerifiedEvent();
     var saga = new TestableSaga<ContributorVerificationSaga, ContributorVerificationSagaData>();
@@ -23,7 +23,7 @@ public class ContributorVerifiedEventTests
   }
 
   [Fact]
-  public async void ShouldInitializeSagaAndMarkAsCompleted()
+  public async Task ShouldInitializeSagaAndMarkAsCompleted()
   {
     int expectedContributorId = 1;
     var startMessage = new StartContributorVerificationCommand()
