@@ -26,6 +26,16 @@ Coming soon!
 
 ![Simplified Architecture](./docs/getting-started-architecture.png)
 
+### Sequence Diagrams For Contributor Verification
+
+#### Verified Flow
+
+![Verified Flow](./docs/SagaVerifiedSequence.jpg)
+
+#### Not Verified Flow
+
+![Not Verified Flow](./docs/SagaTimeoutSequence.jpg)
+
 ## Dependencies
 
 ### Transports
