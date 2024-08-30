@@ -18,7 +18,7 @@ A Worker Service project that receives messages from the NServiceBusTutorial.Web
 
 ### NServiceBusTutorial.Saga 
 
-Coming soon!
+An NServiceBus Saga that keeps track of the Contributors verification workflow.
 
 ## Diagrams
 
