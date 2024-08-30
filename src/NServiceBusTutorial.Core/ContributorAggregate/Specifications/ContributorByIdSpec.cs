@@ -2,7 +2,7 @@
 
 namespace NServiceBusTutorial.Core.ContributorAggregate.Specifications;
 
-public class ContributorByIdSpec : Specification<Contributor>
+public class ContributorByIdSpec : Specification<Contributor>, ISingleResultSpecification<Contributor>
 {
   public ContributorByIdSpec(int contributorId)
   {

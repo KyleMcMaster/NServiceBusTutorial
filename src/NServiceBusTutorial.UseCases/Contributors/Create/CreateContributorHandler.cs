@@ -1,6 +1,5 @@
 ﻿using Ardalis.Result;
 using Ardalis.SharedKernel;
-using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 
 namespace NServiceBusTutorial.UseCases.Contributors.Create;

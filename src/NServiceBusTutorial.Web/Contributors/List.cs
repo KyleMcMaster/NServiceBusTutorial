@@ -28,7 +28,7 @@ public class List(IMediator _mediator) : EndpointWithoutRequest<ContributorListR
     {
       Response = new ContributorListResponse
       {
-        Contributors = result.Value.Select(c => new ContributorRecord(c.Id, c.Name, c.PhoneNumber)).ToList()
+        Contributors = result.Value.Select(c => new ContributorRecord(c.Id, c.Name, c.PhoneNumber, c.Verification)).ToList()
       };
     }
   }

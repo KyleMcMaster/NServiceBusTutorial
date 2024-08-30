@@ -1,18 +1,22 @@
-﻿using NServiceBus;
+﻿using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
 
-namespace NServiceBusTutorial.Worker;
+namespace NServiceBusTutorial.Worker.Contributors;
 
 public class ContributorCreatedEventHandler(ILogger<ContributorCreatedEventHandler> logger) 
   : IHandleMessages<ContributorCreatedEvent>
 {
   private readonly ILogger<ContributorCreatedEventHandler> _logger = logger;
 
-  public Task Handle(ContributorCreatedEvent message, IMessageHandlerContext context)
+  public async Task Handle(ContributorCreatedEvent message, IMessageHandlerContext context)
   {
     _logger.LogInformation("Received {EventName} for {ContributorId}",
       nameof(ContributorCreatedEvent),
       message.ContributorId);
-    return Task.CompletedTask;
+
+    await context.Send(new StartContributorVerificationCommand
+    {
+      ContributorId = message.ContributorId
+    });
   }
 }

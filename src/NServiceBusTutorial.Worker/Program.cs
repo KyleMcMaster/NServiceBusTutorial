@@ -1,11 +1,13 @@
-﻿using Ardalis.GuardClauses;
+﻿using System.Security.Cryptography.Xml;
+using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NServiceBus;
+using NServiceBusTutorial.Core.ContributorAggregate.Commands;
+using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure.Data;
-using NServiceBusTutorial.Worker;
-using System.Reflection;
+using NServiceBusTutorial.Infrastructure.Notifications;
+using NServiceBusTutorial.Worker.Contributors;
 
 var builder = Host.CreateDefaultBuilder();
 
@@ -24,12 +26,17 @@ builder.ConfigureServices((hostContext, services) =>
   var mediatRAssemblies =
   services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies([typeof(ContributorCreateCommandHandler).Assembly]));
   services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
+  services.AddScoped<INotificationService, NoOpNotificationService>();
 });
 
 builder.UseNServiceBus(context => 
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-worker");
-  endpointConfiguration.UseTransport<LearningTransport>();
+  endpointConfiguration.UseSerialization<SystemJsonSerializer>();
+  var transport = endpointConfiguration.UseTransport<LearningTransport>();
+  transport.Routing().RouteToEndpoint(
+    typeof(StartContributorVerificationCommand),
+    "contributors-saga");
 
   return endpointConfiguration;
 });
