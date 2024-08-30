@@ -20,7 +20,7 @@ public class ContributorVerificationSaga : Saga<ContributorVerificationSagaData>
     var verifyContributorCommand = new VerifyContributorCommand { ContributorId = message.ContributorId };
     await context.Send(verifyContributorCommand);
     var timeout = new ContributorVerificationSagaTimeout { ContributorId = message.ContributorId };
-    await RequestTimeout(context, DateTime.UtcNow.AddHours(1), timeout);
+    await RequestTimeout(context, DateTime.UtcNow.AddHours(24), timeout);
   }
 
   public Task Handle(ContributorVerifiedEvent message, IMessageHandlerContext context)

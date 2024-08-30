@@ -11,15 +11,14 @@ public class VerifyContributorCommandHandler(INotificationService notificationSe
 {
   private readonly INotificationService _notificationService = notificationService;
   private readonly IRepository<Contributor> _repository = repository;
-
   public async Task Handle(VerifyContributorCommand message, IMessageHandlerContext context)
   {
     var contributor = await _repository.SingleOrDefaultAsync(new ContributorByIdSpec(message.ContributorId), context.CancellationToken);
     if (contributor is null)
     {
-      throw new InvalidOperationException($"Contributor with ID {message.ContributorId} not found.");
+      throw new InvalidOperationException($"Contributor with Id {message.ContributorId} not found.");
     }
-    string textMessage = "Please verify your phone number by replying with the code: 1234";
+    string textMessage = "Welcome contributor! Please verify your phone number here: https://NimblePros.com/verify/123";
     await _notificationService.SendSmsAsync(contributor.PhoneNumber!.Number, textMessage);
   }
 }
