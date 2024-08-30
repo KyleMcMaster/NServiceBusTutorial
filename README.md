@@ -53,3 +53,7 @@ NimblePros blog posts on NServiceBus
 3: [Commands, Events, and Messages Explained](https://blog.nimblepros.com/blogs/commands-events-messages-explained)
 
 4: [Testing NServiceBus Message Handlers](https://blog.nimblepros.com/blogs/testing-nservicebus-message-handlers/)
+
+5: [Supercharged Sagas - Introduction](https://blog.nimblepros.com/blogs/supercharged-sagas-introduction/)
+
+6: [Supercharged Sagas - Creating Your First NServiceBus Saga](https://blog.nimblepros.com/blogs/supercharged-sagas-creating-your-first-nservicebus-saga/)
