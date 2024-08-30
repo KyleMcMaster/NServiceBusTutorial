@@ -1,5 +1,4 @@
 using Ardalis.SharedKernel;
-using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Specifications;
@@ -7,17 +6,11 @@ using NServiceBusTutorial.Core.Interfaces;
 
 namespace NServiceBusTutorial.Worker.Contributors;
 
-public class VerifyContributorCommandHandler
-  : IHandleMessages<VerifyContributorCommand>
+public class VerifyContributorCommandHandler(INotificationService notificationService, IRepository<Contributor> repository)
+    : IHandleMessages<VerifyContributorCommand>
 {
-  private readonly INotificationService _notificationService;
-  private readonly IRepository<Contributor> _repository;
-
-  public VerifyContributorCommandHandler(INotificationService notificationService, IRepository<Contributor> repository)
-  {
-    _notificationService = notificationService;
-    _repository = repository;
-  }
+  private readonly INotificationService _notificationService = notificationService;
+  private readonly IRepository<Contributor> _repository = repository;
 
   public async Task Handle(VerifyContributorCommand message, IMessageHandlerContext context)
   {

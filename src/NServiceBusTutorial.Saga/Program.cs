@@ -1,5 +1,4 @@
-﻿using NServiceBus;
-using NServiceBusTutorial.Core.ContributorAggregate.Commands;
+﻿using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 
 var builder = Host.CreateDefaultBuilder(args);
 

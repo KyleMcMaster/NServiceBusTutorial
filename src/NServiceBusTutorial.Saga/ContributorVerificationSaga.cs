@@ -1,6 +1,4 @@
-﻿using NServiceBus;
-using NServiceBusTutorial.Core.ContributorAggregate;
-using NServiceBusTutorial.Core.ContributorAggregate.Commands;
+﻿using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
 
 namespace NServiceBusTutorial.Saga;
