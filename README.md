@@ -57,3 +57,5 @@ NimblePros blog posts on NServiceBus
 5: [Supercharged Sagas - Introduction](https://blog.nimblepros.com/blogs/supercharged-sagas-introduction/)
 
 6: [Supercharged Sagas - Creating Your First NServiceBus Saga](https://blog.nimblepros.com/blogs/supercharged-sagas-creating-your-first-nservicebus-saga/)
+
+7 : [Supercharged Sagas - Timeout Tips](https://blog.nimblepros.com/blogs/supercharged-sagas-timeout-tips/)
