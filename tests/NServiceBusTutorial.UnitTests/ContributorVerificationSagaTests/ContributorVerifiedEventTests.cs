@@ -11,11 +11,11 @@ public class ContributorVerifiedEventTests
   public async Task ShouldMarkSagaAsCompleted()
   {
     var message = new ContributorVerifiedEvent();
-    var saga = new TestableSaga<ContributorVerificationSaga, ContributorVerificationSagaData>();
+    var saga = new ContributorVerificationSaga();
     var context = new TestableMessageHandlerContext();
 
-    var result = await saga.Handle(message, context);
+    await saga.Handle(message, context);
 
-    result.Completed.Should().BeTrue();
+    saga.Completed.Should().BeTrue();
   }
 }

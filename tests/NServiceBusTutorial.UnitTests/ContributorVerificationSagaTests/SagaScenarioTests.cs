@@ -13,26 +13,44 @@ public class SagaScenarioTests
   [Fact]
   public async Task ShouldInitializeSagaAndMarkAsCompleted()
   {
-    int expectedContributorId = 1;
-    var startMessage = new StartContributorVerificationCommand()
+    int expectedContributorId = 4680;
+    var startCommand = new StartContributorVerificationCommand
     {
       ContributorId = expectedContributorId
     };
-    var message = new ContributorVerifiedEvent()
+    var verifiedEvent = new ContributorVerifiedEvent
     {
       ContributorId = expectedContributorId
     };
     var saga = new TestableSaga<ContributorVerificationSaga, ContributorVerificationSagaData>();
     var context = new TestableMessageHandlerContext();
 
-    var result = await saga.Handle(startMessage, context);
+    var startResult = await saga.Handle(startCommand, context);
+    var completeResult = await saga.Handle(verifiedEvent, context);
 
     using var assertionScope = new AssertionScope();
-    result.SagaDataSnapshot.ContributorId.Should().Be(expectedContributorId);
+    startResult.SagaDataSnapshot.ContributorId.Should().Be(expectedContributorId);
+    completeResult.Completed.Should().BeTrue();
+  }
 
-    result = await saga.Handle(message, context);
-    result.Completed.Should().BeTrue();
-    var timeoutMessage = result.FindTimeoutMessage<ContributorVerificationSagaTimeout>();
-    timeoutMessage.Should().NotBeNull();
+  [Fact]
+  public async Task ShouldTimeoutWhenTimeAdvancesOverLimit()
+  {
+    int expectedContributorId = 4680;
+    var startCommand = new StartContributorVerificationCommand
+    {
+      ContributorId = expectedContributorId
+    };
+    var saga = new TestableSaga<ContributorVerificationSaga, ContributorVerificationSagaData>();
+    var context = new TestableMessageHandlerContext();
+
+    var startResult = await saga.Handle(startCommand, context);
+    var timeouts = await saga.AdvanceTime(TimeSpan.FromHours(25));
+
+    using var assertionScope = new AssertionScope();
+    startResult.SagaDataSnapshot.ContributorId.Should().Be(expectedContributorId);
+    var timeoutResult = timeouts.Single();
+    timeoutResult.FindSentMessage<NotVerifyContributorCommand>().Should().NotBeNull();
+    timeoutResult.Completed.Should().BeTrue();
   }
 }
