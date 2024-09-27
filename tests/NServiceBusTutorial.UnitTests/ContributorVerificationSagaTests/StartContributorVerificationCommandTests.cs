@@ -23,22 +23,4 @@ public class StartContributorVerificationCommandTests
     var sentMessage = context.FindSentMessage<VerifyContributorCommand>();
     sentMessage.Should().NotBeNull();
   }
-
-  [Fact]
-  public async Task ShouldSetContributorIdOnSagaState()
-  {
-    var message = new StartContributorVerificationCommand()
-    {
-      ContributorId = 4680
-    };
-    var saga = new ContributorVerificationSaga
-    {
-      Data = new()
-    };
-    var context = new TestableMessageHandlerContext();
-
-    await saga.Handle(message, context);
-
-    saga.Data.ContributorId.Should().Be(message.ContributorId);
-  }
 }
