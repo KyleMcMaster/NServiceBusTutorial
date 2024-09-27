@@ -42,6 +42,10 @@ An NServiceBus Saga that keeps track of the Contributors verification workflow.
 
 Currently, this project uses `LearningTransport` which automatically configures a file-based queue at the root of the repository when the applications start. This is useful for development and testing but should not be used in production.
 
+### Persistence
+
+Currently, this project uses `LearningPersistence` for saga persistence by storing data in the file system. This is useful for local development but should not be used in production.
+
 ## Resources
 
 NimblePros blog posts on NServiceBus
