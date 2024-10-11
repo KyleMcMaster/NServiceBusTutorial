@@ -1,9 +1,4 @@
-﻿using Ardalis.Result;
-using NServiceBusTutorial.UseCases.Contributors.Get;
-using NServiceBusTutorial.UseCases.Contributors.Update;
-using FastEndpoints;
-using MediatR;
-using NServiceBus;
+﻿using FastEndpoints;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
 using Ardalis.SharedKernel;
 using NServiceBusTutorial.Core.ContributorAggregate;
