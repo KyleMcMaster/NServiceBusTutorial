@@ -1,12 +1,9 @@
 ﻿using System.Reflection;
 using Ardalis.ListStartupServices;
 using Ardalis.SharedKernel;
-using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate;
-using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure;
 using NServiceBusTutorial.Infrastructure.Data;
-using NServiceBusTutorial.Infrastructure.Email;
 using NServiceBusTutorial.UseCases.Contributors.Create;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -46,7 +43,6 @@ ConfigureMediatR();
 
 builder.Services.AddInfrastructureServices(builder.Configuration, microsoftLogger);
 
-builder.Services.AddScoped<IEmailSender, FakeEmailSender>();
 AddShowAllServicesSupport();
 
 builder.Host.UseNServiceBus(_ =>
