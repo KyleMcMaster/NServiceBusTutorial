@@ -11,10 +11,10 @@ public class CreateContributorValidator : Validator<CreateContributorRequest>
 {
   public CreateContributorValidator()
   {
-    // RuleFor(x => x.Name)
-    //   .NotEmpty()
-    //   .WithMessage("Name is required.")
-    //   .MinimumLength(2)
-    //   .MaximumLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
+    RuleFor(x => x.Name)
+      .NotEmpty()
+      .WithMessage("Name is required.")
+      .MinimumLength(2)
+      .MaximumLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
   }
 }
