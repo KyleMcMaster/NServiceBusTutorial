@@ -4,7 +4,6 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.SharedKernel" />
     <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" />
-    <PackageReference Include="MailKit" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" PrivateAssets="all" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
@@ -12,7 +11,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-    <PackageReference Include="NServiceBus.RabbitMQ" />
     <PackageReference Include="SQLite" />
   </ItemGroup>
   

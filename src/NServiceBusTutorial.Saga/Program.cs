@@ -1,4 +1,4 @@
-﻿using Npgsql;
+using Npgsql;
 using NpgsqlTypes;
 using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
@@ -20,7 +20,7 @@ builder.UseNServiceBus(context =>
     "contributors-worker");
 
   transport.Routing().RouteToEndpoint(
-    typeof(UnverifyContributorCommand),
+    typeof(NotVerifyContributorCommand),
     "contributors-worker");
 
   var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();

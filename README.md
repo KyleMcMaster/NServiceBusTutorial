@@ -18,13 +18,23 @@ A Worker Service project that receives messages from the NServiceBusTutorial.Web
 
 ### NServiceBusTutorial.Saga 
 
-Coming soon!
+An NServiceBus Saga that keeps track of the Contributors verification workflow.
 
 ## Diagrams
 
 ### Simple Diagram (pre-saga)
 
 ![Simplified Architecture](./docs/getting-started-architecture.png)
+
+### Sequence Diagrams For Contributor Verification
+
+#### Verified Flow
+
+![Verified Flow](./docs/SagaVerifiedSequence.jpg)
+
+#### Not Verified Flow
+
+![Not Verified Flow](./docs/SagaTimeoutSequence.jpg)
 
 ## Dependencies
 
@@ -35,6 +45,10 @@ docker run -d --hostname my-rabbit --name some-rabbit -p 15672:15672 -p 5672:567
 docker run -d --name servicecontrol-db -p 5010:5010 -v c:/opt/RavenDB/Server/RavenData particular/servicecontrol-ravendb:latest
 
 docker run -d --name servicecontrol -p 33333:3333 -e TRANSPORTTYPE=RabbitMQ.QuorumConventionalRouting -e CONNECTIONSTRING="host=localhost" -e RAVENDB_CONNECTIONSTRING="http://localhost:5010" particular/servicecontrol:latest --setup
+
+### Persistence
+
+Currently, this project uses `LearningPersistence` for saga persistence by storing data in the file system. This is useful for local development but should not be used in production.
 
 ## Resources
 
@@ -47,3 +61,11 @@ NimblePros blog posts on NServiceBus
 3: [Commands, Events, and Messages Explained](https://blog.nimblepros.com/blogs/commands-events-messages-explained)
 
 4: [Testing NServiceBus Message Handlers](https://blog.nimblepros.com/blogs/testing-nservicebus-message-handlers/)
+
+5: [Supercharged Sagas - Introduction](https://blog.nimblepros.com/blogs/supercharged-sagas-introduction/)
+
+6: [Supercharged Sagas - Creating Your First NServiceBus Saga](https://blog.nimblepros.com/blogs/supercharged-sagas-creating-your-first-nservicebus-saga/)
+
+7 : [Supercharged Sagas - Timeout Tips](https://blog.nimblepros.com/blogs/supercharged-sagas-timeout-tips/)
+
+8 : [Supercharged Sagas - Unit Testing Strategies](https://blog.nimblepros.com/blogs/supercharged-sagas-unit-testing-strategies/)

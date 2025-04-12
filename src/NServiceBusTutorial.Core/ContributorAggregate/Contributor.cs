@@ -30,9 +30,9 @@ public class Contributor : EntityBase, IAggregateRoot
     Verification = VerificationStatus.Verified;
   }
 
-  public void Unverify()
+  public void NotVerify()
   {
-    Verification = VerificationStatus.Unverified;
+    Verification = VerificationStatus.NotVerified;
   }
 }
 
