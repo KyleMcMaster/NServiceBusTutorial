@@ -37,7 +37,7 @@
     <PackageVersion Include="NServiceBus.Persistence.Sql" Version="8.1.1" />
     <PackageVersion Include="NServiceBus.Testing" Version="9.0.1" />
     <PackageVersion Include="NSubstitute" Version="5.3.0" />
-    <PackageVersion Include="ReportGenerator" Version="5.4.4" />
+    <PackageVersion Include="ReportGenerator" Version="5.4.5" />
     <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
