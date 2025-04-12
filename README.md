@@ -40,11 +40,7 @@ An NServiceBus Saga that keeps track of the Contributors verification workflow.
 
 ### Transports
 
-docker run -d --hostname my-rabbit --name some-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3.13.6-management
-
-docker run -d --name servicecontrol-db -p 5010:5010 -v c:/opt/RavenDB/Server/RavenData particular/servicecontrol-ravendb:latest
-
-docker run -d --name servicecontrol -p 33333:3333 -e TRANSPORTTYPE=RabbitMQ.QuorumConventionalRouting -e CONNECTIONSTRING="host=localhost" -e RAVENDB_CONNECTIONSTRING="http://localhost:5010" particular/servicecontrol:latest --setup
+Currently, this project uses LearningTransport which automatically configures a file-based queue at the root of the repository when the applications start. This is useful for development and testing but should not be used in production.
 
 ### Persistence
 

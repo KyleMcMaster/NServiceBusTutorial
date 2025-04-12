@@ -4,6 +4,7 @@ using NServiceBusTutorial.Core.ContributorAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace NServiceBusTutorial.Infrastructure.Data;
+
 public class AppDbContext : DbContext
 {
   private readonly IDomainEventDispatcher? _dispatcher;

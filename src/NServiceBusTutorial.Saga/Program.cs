@@ -1,6 +1,5 @@
 using Npgsql;
 using NpgsqlTypes;
-using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 
 var builder = Host.CreateDefaultBuilder(args);
@@ -11,9 +10,7 @@ builder.UseNServiceBus(context =>
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   endpointConfiguration.EnableInstallers();
 
-  var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
-  transport.ConnectionString("host=localhost");
-  transport.UseDirectRoutingTopology(QueueType.Quorum);
+  var transport = endpointConfiguration.UseTransport<LearningTransport>();
 
   transport.Routing().RouteToEndpoint(
     typeof(VerifyContributorCommand),

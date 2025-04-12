@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
 using Microsoft.EntityFrameworkCore;
-using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure.Data;
@@ -35,9 +34,7 @@ builder.UseNServiceBus(context =>
   endpointConfiguration.EnableInstallers();
   endpointConfiguration.SendFailedMessagesTo("error");
 
-  var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
-  transport.ConnectionString("host=localhost");
-  transport.UseDirectRoutingTopology(QueueType.Quorum);
+  var transport = endpointConfiguration.UseTransport<LearningTransport>();
 
   transport.Routing().RouteToEndpoint(
     typeof(StartContributorVerificationCommand),
