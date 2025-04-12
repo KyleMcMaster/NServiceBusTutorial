@@ -45,10 +45,11 @@ builder.Services.AddInfrastructureServices(builder.Configuration, microsoftLogge
 
 AddShowAllServicesSupport();
 
-builder.Host.UseNServiceBus(_ =>
+builder.Host.UseNServiceBus(context =>
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-api");
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
+  endpointConfiguration.EnableInstallers();
 
   var transport = endpointConfiguration.UseTransport<LearningTransport>();
 

@@ -19,10 +19,10 @@ public static class InfrastructureServiceExtensions
     IConfiguration configuration,
     ILogger logger)
   {
-    string? connectionString = configuration.GetConnectionString("SqliteConnection");
+    string? connectionString = configuration.GetConnectionString("DefaultConnection");
     Guard.Against.Null(connectionString);
-    services.AddDbContext<AppDbContext>(options =>
-     options.UseSqlite(connectionString));
+    services.AddDbContext<AppDbContext>(options => 
+      options.UseNpgsql(connectionString));
 
     services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
     services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));

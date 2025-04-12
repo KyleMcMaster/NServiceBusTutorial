@@ -1,8 +1,6 @@
-﻿using System.Security.Cryptography.Xml;
-using Ardalis.GuardClauses;
+﻿using Ardalis.GuardClauses;
 using Ardalis.SharedKernel;
 using Microsoft.EntityFrameworkCore;
-using NServiceBus;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure.Data;
@@ -15,10 +13,10 @@ builder.UseConsoleLifetime();
 
 builder.ConfigureServices((hostContext, services) =>
 {
-  string? connectionString = hostContext.Configuration.GetConnectionString("SqliteConnection");
+  string? connectionString = hostContext.Configuration.GetConnectionString("DefaultConnection");
   Guard.Against.Null(connectionString);
   services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseNpgsql(connectionString));
 
   services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
   services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
@@ -33,10 +31,18 @@ builder.UseNServiceBus(context =>
 {
   var endpointConfiguration = new EndpointConfiguration("contributors-worker");
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
+  endpointConfiguration.EnableInstallers();
+  endpointConfiguration.SendFailedMessagesTo("error");
+
   var transport = endpointConfiguration.UseTransport<LearningTransport>();
+
   transport.Routing().RouteToEndpoint(
     typeof(StartContributorVerificationCommand),
     "contributors-saga");
+
+  var recoverability = endpointConfiguration.Recoverability();
+  recoverability.Immediate(c => c.NumberOfRetries(0));
+  recoverability.Delayed(c => c.NumberOfRetries(0));
 
   return endpointConfiguration;
 });
