@@ -1,6 +1,4 @@
 ﻿using NServiceBusTutorial.Core.ContributorAggregate;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace NServiceBusTutorial.Infrastructure.Data;
 
@@ -9,15 +7,11 @@ public static class SeedData
   public static readonly Contributor Contributor1 = new("Ardalis", new(string.Empty, "123-456-7890", string.Empty), ContributorStatus.CoreTeam, VerificationStatus.Pending);
   public static readonly Contributor Contributor2 = new("Snowfrog", new(string.Empty, "098-765-4321", string.Empty), ContributorStatus.Community, VerificationStatus.Pending);
 
-  public static void Initialize(IServiceProvider serviceProvider)
+  public static void Initialize(IServiceProvider serviceProvider, AppDbContext dbContext)
   {
-    using (var dbContext = new AppDbContext(
-        serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(), null))
-    {
-      if (dbContext.Contributors.Any()) return;   // DB has been seeded
+    if (dbContext.Contributors.Any()) return;   // DB has been seeded
 
-      PopulateTestData(dbContext);
-    }
+    PopulateTestData(dbContext);
   }
   public static void PopulateTestData(AppDbContext dbContext)
   {

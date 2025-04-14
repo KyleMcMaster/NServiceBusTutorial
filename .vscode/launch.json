@@ -89,6 +89,24 @@
                 },
             }
         },
+        {
+            "name": "Aspire: Run All (Debug)",
+            "type": "coreclr",
+            "preLaunchTask": "dotnet: build (Debug)",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/NServiceBusTutorial.AspireHost/bin/Debug/net9.0/NServiceBusTutorial.AspireHost.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/NServiceBusTutorial.AspireHost/bin/Debug/net9.0",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DOTNET_ENVIRONMENT": "Development",
+                "DOTNET_DASHBOARD_OTLP_ENDPOINT_URL": "https://localhost:21007",
+                "DOTNET_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:22245",
+                "ASPNETCORE_URLS": "https://localhost:17143"
+            },
+        },
     ],
     "compounds": [
         {
