@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Ardalis.SharedKernel;
+﻿using Ardalis.SharedKernel;
 using NServiceBusTutorial.Core.ContributorAggregate;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +20,7 @@ public class AppDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
-    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
   }
 
   public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
