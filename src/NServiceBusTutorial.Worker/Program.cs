@@ -6,6 +6,7 @@ using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure.Data;
 using NServiceBusTutorial.Infrastructure.Notifications;
 using NServiceBusTutorial.Worker.Contributors;
+using Serilog;
 
 var builder = Host.CreateDefaultBuilder();
 
@@ -25,6 +26,11 @@ builder.ConfigureServices((hostContext, services) =>
   services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies([typeof(ContributorCreateCommandHandler).Assembly]));
   services.AddScoped<IDomainEventDispatcher, MediatRDomainEventDispatcher>();
   services.AddScoped<INotificationService, NoOpNotificationService>();
+
+  services.AddSerilog((services, loggerConfiguration) => loggerConfiguration
+      .ReadFrom.Configuration(hostContext.Configuration)
+      .ReadFrom.Services(services)
+      .Enrich.FromLogContext());
 });
 
 builder.UseNServiceBus(context => 
