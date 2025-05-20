@@ -1,8 +1,17 @@
 using Npgsql;
 using NpgsqlTypes;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
+using Serilog;
 
 var builder = Host.CreateDefaultBuilder(args);
+
+builder.ConfigureServices((hostContext, services) =>
+{
+  services.AddSerilog((services, loggerConfiguration) => loggerConfiguration
+      .ReadFrom.Configuration(hostContext.Configuration)
+      .ReadFrom.Services(services)
+      .Enrich.FromLogContext());
+});
 
 builder.UseNServiceBus(context => 
 {
