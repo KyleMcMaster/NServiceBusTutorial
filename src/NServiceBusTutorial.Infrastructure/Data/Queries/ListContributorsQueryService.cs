@@ -12,8 +12,12 @@ public class ListContributorsQueryService(AppDbContext _db) : IListContributorsQ
   public async Task<IEnumerable<ContributorDTO>> ListAsync()
   {
     // NOTE: This will fail if testing with EF InMemory provider!
-    var result = await _db.Database.SqlQuery<ContributorDTO>(
-      $"SELECT Id, Name, PhoneNumber_Number AS PhoneNumber, Verification FROM public.Contributors") // don't fetch other big columns
+    // var result = await _db.Database.SqlQuery<ContributorDTO>(
+    //   $"SELECT Id, Name, PhoneNumber_Number AS PhoneNumber, Verification FROM public.Contributors") // don't fetch other big columns
+    //   .ToListAsync();
+    var result = await _db.Contributors
+      .AsNoTracking()
+      .Select(c => new ContributorDTO(c.Id, c.Name, c.PhoneNumber!.Number, c.Verification.Name))
       .ToListAsync();
 
     return result;
