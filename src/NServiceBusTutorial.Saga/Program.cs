@@ -1,7 +1,11 @@
 using Npgsql;
 using NpgsqlTypes;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
+
+string endpointName = "contributors-saga";
 
 var builder = Host.CreateDefaultBuilder(args);
 
@@ -11,11 +15,19 @@ builder.ConfigureServices((hostContext, services) =>
       .ReadFrom.Configuration(hostContext.Configuration)
       .ReadFrom.Services(services)
       .Enrich.FromLogContext());
+
+  services.AddOpenTelemetry()
+    .ConfigureResource(resourceBuilder => resourceBuilder.AddService(endpointName))
+    .WithTracing(builder =>
+    {
+        builder.AddSource("NServiceBus.*");
+        builder.AddConsoleExporter();
+    });
 });
 
 builder.UseNServiceBus(context => 
 {
-  var endpointConfiguration = new EndpointConfiguration("contributors-saga");
+  var endpointConfiguration = new EndpointConfiguration(endpointName);
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   endpointConfiguration.EnableInstallers();
 
@@ -46,6 +58,7 @@ builder.UseNServiceBus(context =>
           return new NpgsqlConnection(connectionString);
       });
   endpointConfiguration.EnableInstallers();
+  endpointConfiguration.EnableOpenTelemetry();
 
   var recoverability = endpointConfiguration.Recoverability();
   recoverability.Immediate(c => c.NumberOfRetries(0));

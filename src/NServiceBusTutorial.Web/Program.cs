@@ -12,6 +12,10 @@ using Serilog;
 using Serilog.Extensions.Logging;
 using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+
+string endpointName = "contributors-api";
 
 var logger = Log.Logger = new LoggerConfiguration()
   .Enrich.FromLogContext()
@@ -25,6 +29,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((_, config) => config.ReadFrom.Configuration(builder.Configuration));
 var microsoftLogger = new SerilogLoggerFactory(logger)
     .CreateLogger<Program>();
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resourceBuilder => resourceBuilder.AddService(endpointName))
+    .WithTracing(builder =>
+    {
+        builder.AddSource("NServiceBus.*");
+        builder.AddConsoleExporter();
+    });
 
 // Configure Web Behavior
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -47,7 +59,7 @@ AddShowAllServicesSupport();
 
 builder.Host.UseNServiceBus(context =>
 {
-  var endpointConfiguration = new EndpointConfiguration("contributors-api");
+  var endpointConfiguration = new EndpointConfiguration(endpointName);
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   endpointConfiguration.EnableInstallers();
 
@@ -65,6 +77,7 @@ builder.Host.UseNServiceBus(context =>
 
   endpointConfiguration.SendOnly();
   endpointConfiguration.EnableInstallers();
+  endpointConfiguration.EnableOpenTelemetry();
 
   return endpointConfiguration;
 });

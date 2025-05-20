@@ -4,18 +4,20 @@ var username = builder.AddParameter("username", "postgres",secret: false);
 var password = builder.AddParameter("password", "postgres",secret: false);
 
 var postgres = builder.AddPostgres("postgres", username, password, 5432);
-var db = postgres.AddDatabase("NServiceBusTutorial");
+var domainDb = postgres.AddDatabase("NServiceBusTutorial");
+var sagaDb = postgres.AddDatabase("SagaDb");
 
 builder.AddProject<Projects.NServiceBusTutorial_Web>("Web")
   .WithReference(postgres)
-  .WaitFor(db);
+  .WaitFor(domainDb);
 
 builder.AddProject<Projects.NServiceBusTutorial_Saga>("Saga")
   .WithReference(postgres)
-  .WaitFor(db);
+  .WaitFor(domainDb)
+  .WaitFor(sagaDb);
 
 builder.AddProject<Projects.NServiceBusTutorial_Worker>("Worker")
   .WithReference(postgres)
-  .WaitFor(db);
+  .WaitFor(domainDb);
 
 builder.Build().Run();

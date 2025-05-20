@@ -1,5 +1,6 @@
 ﻿using NServiceBusTutorial.Core.ContributorAggregate.Commands;
 using NServiceBusTutorial.Core.ContributorAggregate.Events;
+using Serilog;
 
 namespace NServiceBusTutorial.Saga;
 
@@ -17,6 +18,7 @@ public class ContributorVerificationSaga : Saga<ContributorVerificationSagaData>
 
   public async Task Handle(StartContributorVerificationCommand message, IMessageHandlerContext context)
   {
+    Log.Logger.Information("Starting contributor verification for {ContributorId}", message.ContributorId);
     var command = new VerifyContributorCommand { ContributorId = message.ContributorId };
     await context.Send(command);
     var timeout = new ContributorVerificationSagaTimeout { ContributorId = message.ContributorId };

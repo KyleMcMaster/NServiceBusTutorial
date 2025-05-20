@@ -6,7 +6,11 @@ using NServiceBusTutorial.Core.Interfaces;
 using NServiceBusTutorial.Infrastructure.Data;
 using NServiceBusTutorial.Infrastructure.Notifications;
 using NServiceBusTutorial.Worker.Contributors;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
+
+string endpointName = "contributors-worker";
 
 var builder = Host.CreateDefaultBuilder();
 
@@ -31,11 +35,19 @@ builder.ConfigureServices((hostContext, services) =>
       .ReadFrom.Configuration(hostContext.Configuration)
       .ReadFrom.Services(services)
       .Enrich.FromLogContext());
+
+  services.AddOpenTelemetry()
+    .ConfigureResource(resourceBuilder => resourceBuilder.AddService(endpointName))
+    .WithTracing(builder =>
+    {
+        builder.AddSource("NServiceBus.*");
+        builder.AddConsoleExporter();
+    });
 });
 
 builder.UseNServiceBus(context => 
 {
-  var endpointConfiguration = new EndpointConfiguration("contributors-worker");
+  var endpointConfiguration = new EndpointConfiguration(endpointName);
   endpointConfiguration.UseSerialization<SystemJsonSerializer>();
   endpointConfiguration.EnableInstallers();
   endpointConfiguration.SendFailedMessagesTo("error");
@@ -45,6 +57,8 @@ builder.UseNServiceBus(context =>
   transport.Routing().RouteToEndpoint(
     typeof(StartContributorVerificationCommand),
     "contributors-saga");
+
+  endpointConfiguration.EnableOpenTelemetry();
 
   var recoverability = endpointConfiguration.Recoverability();
   recoverability.Immediate(c => c.NumberOfRetries(0));
